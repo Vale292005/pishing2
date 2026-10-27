@@ -1,0 +1,494 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>RedTelecom — Portal de Servicios</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --ink-soft: #475569;
+    --line: #e2e8f0;
+    --brand: #d32f2f;       /* Rojo corporativo */
+    --brand-deep: #9a0007;  /* Rojo oscuro */
+    --brand-tint: #fde8e8;
+    --accent: #0284c7;
+    --warn: #c0392b;
+    --warn-bg: #fff1f2;
+    --field-bg: #f8fafc;
+    color-scheme: light only;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 440px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  /* ---- Barra superior utilitaria ---- */
+  .topbar { background: var(--brand-deep); color: #fee2e2; font-size: 0.78rem; }
+  .topbar .wrap {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
+    padding-block: 7px;
+  }
+  .topbar a { color: #fee2e2; text-decoration: none; opacity: 0.9; }
+  .topbar .links { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ---- Cabecera de marca ---- */
+  header.brand { background: var(--surface); border-bottom: 1px solid var(--line); }
+  header.brand .wrap {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    padding-block: 16px;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* ESPACIO PARA TU LOGOTIPO */
+  .logo-placeholder {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-text .name { font-size: 1.25rem; font-weight: 800; color: var(--ink); line-height: 1.1; }
+  .logo-text .tag { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 1.2px; text-transform: uppercase; }
+  
+  .afiliado-btn {
+    background: var(--brand); color: #fff; border: none; border-radius: 8px;
+    padding: 10px 18px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+
+  /* ---- Nav ---- */
+  nav.main { background: var(--brand); }
+  nav.main .wrap {
+    display: flex; gap: 2px; flex-wrap: nowrap; padding-block: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  nav.main .wrap::-webkit-scrollbar { display: none; }
+  nav.main a {
+    color: #ffffff; text-decoration: none; font-size: 0.85rem; font-weight: 600;
+    padding: 12px 13px; display: block; white-space: nowrap;
+  }
+  nav.main a.active, nav.main a:hover { background: var(--brand-deep); }
+
+  /* ---- Banner ---- */
+  .banner {
+    position: relative; overflow: hidden;
+    max-width: 440px; margin: 0 auto;
+    min-height: 160px; display: flex; align-items: flex-end;
+    background: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand) 100%);
+    color: #fff;
+  }
+  .banner .wrap { padding-block: 20px; color: #fff; }
+  .banner .eyebrow {
+    display: inline-block; font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase;
+    background: rgba(255,255,255,0.2); padding: 3px 9px; border-radius: 20px; margin-bottom: 8px;
+  }
+  .banner h2 { margin: 0 0 6px; font-size: 1.35rem; line-height: 1.15; }
+  .banner p { margin: 0; font-size: 0.82rem; opacity: 0.95; }
+
+  /* ---- Banda de alerta ---- */
+  .alert {
+    background: var(--warn-bg); border-left: 5px solid var(--brand);
+    margin-top: 18px; border-radius: 6px;
+  }
+  .alert .wrap { padding-block: 13px; display: flex; gap: 12px; align-items: flex-start; }
+  .alert .ico { color: var(--brand); font-size: 1.3rem; flex: none; line-height: 1.2; }
+  .alert h2 { margin: 0 0 3px; font-size: 0.98rem; color: var(--brand-deep); }
+  .alert p { margin: 0; font-size: 0.86rem; color: var(--ink-soft); }
+
+  /* ---- Cuerpo ---- */
+  main { padding-block: 26px 40px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: start; }
+
+  .intro h1 { font-size: 1.45rem; margin: 0 0 10px; color: var(--ink); line-height: 1.2; }
+  .intro p { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 14px; }
+  .intro ul { padding-left: 18px; margin: 0; color: var(--ink-soft); font-size: 0.88rem; }
+  .intro li { margin-bottom: 7px; }
+  .deadline {
+    margin-top: 18px; background: var(--brand-tint); border-radius: 8px; padding: 14px 16px;
+    font-size: 0.86rem; color: var(--brand-deep);
+  }
+
+  /* ---- Formulario (Gancho) ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px; box-shadow: 0 6px 22px rgba(15,23,42,0.06);
+  }
+  .card h3 { margin: 0 0 4px; font-size: 1.1rem; color: var(--ink); }
+  .card .sub { margin: 0 0 18px; font-size: 0.82rem; color: var(--ink-soft); }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .field input, .field select {
+    width: 100%; padding: 10px 12px; font-size: 0.9rem; font-family: inherit;
+    background: var(--field-bg); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 7px;
+  }
+  .field input:focus, .field select:focus { outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 420px) { .row2 { grid-template-columns: 1fr; } }
+  .submit {
+    width: 100%; margin-top: 6px; background: var(--brand); color: #fff; border: none;
+    border-radius: 8px; padding: 13px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  }
+  .submit:hover { background: var(--brand-deep); }
+  .finelock { margin-top: 12px; font-size: 0.72rem; color: var(--ink-soft); text-align: center; }
+
+  footer { border-top: 1px solid var(--line); background: var(--surface); }
+  footer .wrap { padding-block: 18px; font-size: 0.76rem; color: var(--ink-soft); }
+
+  /* ---- OVERLAY DE REVELACIÓN INTERACTIVO ---- */
+  .reveal {
+    position: fixed; inset: 0; z-index: 100;
+    background: radial-gradient(circle at top right, #1e1b1b, #0f172a 80%);
+    color: #f8fafc; overflow-y: auto;
+    padding: max(24px, env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) max(24px, env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px));
+  }
+  
+  .reveal-container {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .reveal-header {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 28px 20px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pulse-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    color: #fca5a5;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  }
+
+  .reveal-header h2 { font-size: clamp(1.6rem, 5vw, 2.3rem); margin: 0 0 10px; font-weight: 800; color: #fff; }
+  .reveal-header p { font-size: 0.98rem; color: #cbd5e1; margin: 0 auto; max-width: 580px; line-height: 1.6; }
+
+  .section-title { font-size: 1.1rem; color: #38bdf8; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; font-weight: 700; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .info-card {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .info-card:hover { transform: translateY(-3px); border-color: rgba(56, 189, 248, 0.4); }
+
+  .info-card .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+
+  .info-card .icon-box {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(56, 189, 248, 0.15); color: #38bdf8;
+    display: grid; place-items: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+
+  .info-card h4 { margin: 0; font-size: 0.95rem; color: #f1f5f9; font-weight: 700; }
+  .info-card p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
+
+  .flow-box {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px; padding: 18px;
+  }
+
+  .flow-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px; margin-top: 10px;
+  }
+
+  .step-item {
+    background: rgba(30, 41, 59, 0.5); padding: 12px;
+    border-radius: 8px; font-size: 0.82rem; color: #cbd5e1;
+    border-left: 3px solid #ef4444;
+  }
+
+  .step-item strong { display: block; color: #fca5a5; margin-bottom: 3px; font-size: 0.85rem; }
+
+  .actions { text-align: center; padding-top: 8px; }
+
+  .restart {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    color: #fff; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+    transition: transform 0.15s ease;
+  }
+
+  .restart:hover { transform: scale(1.02); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  }
+</style>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>Atención al cliente: *611 · Línea gratuita nacional</span>
+    <span class="links"><a href="#">Mi Cuenta</a><a href="#">Soporte</a><a href="#">Tienda</a></span>
+  </div>
+</div>
+
+<header class="brand">
+  <div class="wrap">
+    <div class="logo-container">
+      <!-- PON AQUÍ TU LOGO: Reemplaza este div por tu tag <img src="tu-logo.png" alt="Logo"> -->
+      <div class="logo-placeholder">
+        <!-- <img> opcional -->
+        <span>RT</span>
+      </div>
+
+      <div class="logo-text">
+        <div class="name">RedTelecom</div>
+        <div class="tag">Servicios Digitales & Movilidad</div>
+      </div>
+    </div>
+    <button class="afiliado-btn" type="button">Portal Clientes</button>
+  </div>
+</header>
+
+<nav class="main">
+  <div class="wrap">
+    <a href="#">Inicio</a>
+    <a href="#">Planes Móviles</a>
+    <a href="#">Hogar y Fibra</a>
+    <a href="#" class="active">Actualización de Línea</a>
+    <a href="#">Servicios Cloud</a>
+    <a href="#">Ayuda</a>
+  </div>
+</nav>
+
+<section class="banner">
+  <div class="wrap">
+    <span class="eyebrow">Aviso a Clientes</span>
+    <h2>Migración a Red 5G y Actualización</h2>
+    <p>Validación de titularidad de línea para la actualización de servicios y mantenimiento de beneficios.</p>
+  </div>
+</section>
+
+<div class="alert">
+  <div class="wrap">
+    <span class="ico" aria-hidden="true">&#9888;</span>
+    <div>
+      <h2>Validación obligatoria de línea activa</h2>
+      <p>Debes verificar los datos del titular antes de la fecha límite para evitar la suspensión temporal del servicio móvil.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap grid">
+    <section class="intro">
+      <h1>Confirmación de Datos de Titularidad</h1>
+      <p>Debido al proceso de migración de red en tu zona, requerimos validar la información asociada a tu línea móvil o plan hogar para garantizar la continuidad del servicio.</p>
+      <ul>
+        <li>Proceso 100% digital y rápido.</li>
+        <li>Evita interrupciones en tus servicios de datos y llamadas.</li>
+        <li>Mantén tus beneficios de gigas acumuladas.</li>
+      </ul>
+      <div class="deadline">
+        <strong>Fecha límite:</strong> Tienes 24 horas para completar el registro de verificación.
+      </div>
+    </section>
+
+    <section>
+      <form class="card" id="phishForm" novalidate autocomplete="off">
+        <h3>Verifica tu línea</h3>
+        <p class="sub">Ingresa la información del titular de la cuenta.</p>
+
+        <div class="row2">
+          <div class="field">
+            <label for="nombre">Nombres del Titular</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej: Carlos">
+          </div>
+          <div class="field">
+            <label for="apellido">Apellidos</label>
+            <input type="text" id="apellido" name="apellido" placeholder="Ej: Perez">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="linea">Número de Línea / Cuenta</label>
+          <input type="text" id="linea" name="linea" inputmode="numeric" placeholder="Ej: 300 000 0000">
+        </div>
+
+        <div class="field">
+          <label for="documento">Documento de Identidad</label>
+          <input type="text" id="documento" name="documento" inputmode="numeric" placeholder="Número de documento">
+        </div>
+
+        <button type="submit" class="submit">Validar mi línea ahora</button>
+        <div class="finelock">&#128274; Conexión Cifrada SSL · Canal Oficial</div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    RedTelecom — Entidad ficticia creada exclusivamente para ejercicios educativos de concientización en ciberseguridad. No es una marca real.
+  </div>
+</footer>
+
+<!-- ===== OVERLAY EDUCATIVO DE REVELACIÓN ===== -->
+<div class="reveal" id="reveal" hidden role="alertdialog" aria-modal="true" aria-labelledby="revealTitle">
+  <div class="reveal-container">
+    
+    <header class="reveal-header">
+      <div class="pulse-badge">
+        <span>&#9888;</span> Simulacro de Ciberseguridad
+      </div>
+      <h2 id="revealTitle">¡Atención! Caíste en un simulacro de Angler Phishing</h2>
+      <p>
+        Ningún dato que hayas ingresado fue guardado o enviado. Este ejercicio busca enseñarte a identificar fraudes digitales en redes sociales y servicios de telecomunicaciones.
+      </p>
+    </header>
+
+    <div class="flow-box">
+      <div class="section-title">
+        <span>&#128373;</span> ¿Cómo opera esta estafa en redes sociales?
+      </div>
+      <div class="flow-steps">
+        <div class="step-item">
+          <strong>1. La Queja Pública</strong>
+          Publicas una duda o reclamo sobre tu servicio o señal en redes sociales.
+        </div>
+        <div class="step-item">
+          <strong>2. El Falso Soporte</strong>
+          Un perfil falso te escribe por privado haciéndose pasar por el soporte oficial de la empresa.
+        </div>
+        <div class="step-item">
+          <strong>3. El Enlace Engañoso</strong>
+          Te redirigen a un portal idéntico al oficial (como este) para apoderarse de tus datos personales.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <span>&#128681;</span> Señales de alerta clave
+      </div>
+      
+      <div class="cards-grid">
+        <div class="info-card">
+          <div class="card-head">
+            <div class="icon-box">&#128100;</div>
+            <h4>Verifica la cuenta que te responde</h4>
+          </div>
+          <p>Revisa la insignia azul de verificación. Las cuentas falsas suelen incluir caracteres adicionales como guiones o números extra en la contraseña de usuario.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-head">
+            <div class="icon-box">&#128279;</div>
+            <h4>Enlaces externos sospechosos</h4>
+          </div>
+          <p>Las empresas no te pedirán ingresar datos sensibles a través de enlaces informales compartidos en mensajes privados.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-head">
+            <div class="icon-box">&#9200;</div>
+            <h4>Presión y urgencia falsa</h4>
+          </div>
+          <p>Frases como "tu servicio será cortado en horas" buscan que actúes apresuradamente sin comprobar el canal oficial.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="card-head">
+            <div class="icon-box">&#128737;</div>
+            <h4>Acceso directo por navegador</h4>
+          </div>
+          <p>Ante la duda, escribe la dirección del sitio oficial directamente en tu navegador o ingresa a través de la app oficial.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="restart" type="button" id="restart">Entendido, volver al ejercicio</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('phishForm');
+    var reveal = document.getElementById('reveal');
+    var restart = document.getElementById('restart');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      form.reset();
+      reveal.hidden = false;
+      reveal.scrollTop = 0;
+      restart.focus();
+    });
+
+    restart.addEventListener('click', function () {
+      reveal.hidden = true;
+      document.getElementById('nombre').focus();
+    });
+  })();
+</script>
